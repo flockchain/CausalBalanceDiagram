@@ -12,7 +12,7 @@ type ConnectionOld = {
   endNodeIndex: number;
   degree: number;
   sign: number;
-  color: number;
+  strength: number;
 };
 
 //New Types
