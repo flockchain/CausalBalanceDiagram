@@ -109,7 +109,15 @@ function Node(model, config) {
         (myEdges[i].allowance == 1 && signal.delta > 0) ||
         (myEdges[i].allowance == -1 && signal.delta < 0)
       ) {
-        myEdges[i].addSignal(signal);
+        if (
+          tresholdsArePassed(
+            self.value,
+            myEdges[i].lowBound,
+            myEdges[i].upBound
+          )
+        ) {
+          myEdges[i].addSignal(signal);
+        }
       }
     }
   };
@@ -334,3 +342,31 @@ Node._getUID = function () {
   Node._UID++;
   return Node._UID;
 };
+
+////////////////////////////
+// Helper Functions     ! //
+////////////////////////////
+
+function tresholdsArePassed(value, lowBound, upBound) {
+  if (lowBound <= value && value <= upBound) {
+    console.log(
+      "passed first with lowBound: ",
+      lowBound,
+      " and value: ",
+      value
+    );
+    return true;
+  }
+  if (lowBound == -1 && value <= upBound) {
+    console.log("passed second");
+    return true;
+  }
+  if (upBound == -1 && value >= lowBound) {
+    console.log("passed third");
+    return true;
+  }
+  console.log(value);
+  console.log(lowBound);
+  console.log(upBound);
+  return false;
+}

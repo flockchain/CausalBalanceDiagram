@@ -9,7 +9,8 @@ Edge.MAX_SIGNALS = 100;
 Edge.MAX_SIGNALS_PER_EDGE = 10;
 Edge.defaultStrength = 1;
 Edge.defaultAllowance = 0;
-Edge.defaultTreshold = 0;
+Edge.defaultLowBound = 0;
+Edge.defaultUpBound = 1;
 
 function Edge(model, config) {
   var self = this;
@@ -28,7 +29,8 @@ function Edge(model, config) {
     id: Edge._getUID,
     strength: Edge.defaultStrength,
     allowance: Edge.defaultAllowance,
-    treshold: Edge.defaultTreshold,
+    lowBound: Edge.defaultLowBound,
+    upBound: Edge.defaultUpBound,
   });
 
   // Get my NODES
@@ -288,6 +290,8 @@ function Edge(model, config) {
     if (self.id == Sidebar.edgeEditingIndex) {
       self.strength = Edge.defaultStrength;
       self.allowance = Edge.defaultAllowance;
+      self.lowBound = Edge.defaultLowBound;
+      self.upBound = Edge.defaultUpBound;
     }
     var l0;
     if (self.allowance == 1) {
@@ -436,10 +440,18 @@ function Edge(model, config) {
     ctx.rotate(-a);
     ctx.fillStyle = "#999";
     ctx.fillText(self.label, 0, 0);
-    var tresholdImage = new Image();
-    tresholdImage.src = "css/icons/tresholds/" + self.treshold + ".png";
-    tresholdImage.setAttribute("class", "tresholdIcon");
-    ctx.drawImage(tresholdImage, -35, 35);
+    if (self.lowBound != -1) {
+      var lowBoundImage = new Image();
+      lowBoundImage.src = "css/icons/tresholds/" + self.lowBound + ".png";
+      lowBoundImage.setAttribute("class", "lowBoundIcon");
+      ctx.drawImage(lowBoundImage, -80, 35);
+    }
+    if (self.upBound != -1) {
+      var upBoundImage = new Image();
+      upBoundImage.src = "css/icons/tresholds/" + self.upBound + ".png";
+      upBoundImage.setAttribute("class", "upBoundIcon");
+      ctx.drawImage(upBoundImage, 10, 35);
+    }
     ctx.restore();
 
     // DRAW SIGNALS

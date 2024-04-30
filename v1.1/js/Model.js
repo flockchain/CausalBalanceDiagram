@@ -268,7 +268,8 @@ function Model(loopy) {
       // 3 - id
       // 4 - strength
       // 6 - allowance
-      // 7 - treshold
+      // 7 - lowBound
+      // 8 - UpBound
       var dataEdge = [
         edge.from.id,
         edge.to.id,
@@ -276,7 +277,8 @@ function Model(loopy) {
         edge.id,
         edge.strength,
         edge.allowance,
-        edge.treshold,
+        edge.lowBound,
+        edge.upBound,
       ];
       if (dataEdge.f == dataEdge.t) {
         dataEdge.push(Math.round(edge.rotation));
@@ -344,7 +346,8 @@ function Model(loopy) {
         id: edge[3],
         strength: edge[4],
         allowance: edge[5],
-        treshold: edge[6],
+        lowBound: edge[6],
+        upBound: edge[7],
       };
       self.addEdge(edgeConfig);
     }
@@ -435,7 +438,8 @@ function Model(loopy) {
     if (clickedEdge) {
       Edge.defaultStrength = clickedEdge.strength;
       Edge.defaultAllowance = clickedEdge.allowance;
-      Edge.defaultTreshold = clickedEdge.treshold;
+      Edge.defaultLowBound = clickedEdge.lowBound;
+      Edge.defaultUpBound = clickedEdge.upBound;
       loopy.sidebar.edit(clickedEdge);
       return;
     }

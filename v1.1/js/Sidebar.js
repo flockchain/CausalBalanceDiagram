@@ -135,25 +135,39 @@ function Sidebar(loopy) {
       })
     );
     page.addComponent(
-      new ComponentHTML({
-        html: "(Allow only positive or negative impact transfers)",
-      })
-    );
-    page.addComponent(
-      "treshold",
+      "lowerBound",
       new ComponentSlider({
         bg: "initial",
-        label: "Treshold:",
+        label: "Lower-Bound:",
         options: [0, 0.16, 0.33, 0.5, 0.66, 0.83, 1],
         //options: [0, 1/6, 2/6, 3/6, 4/6, 5/6, 1],
         oninput: function (value) {
-          Edge.defaultTreshold = value;
+          if (value < Edge.defaultUpBound || Edge.defaultUpBound == -1) {
+            if (Edge.defaultLowBound == value) {
+              Edge.defaultLowBound = -1;
+            } else {
+              Edge.defaultLowBound = value;
+            }
+          }
         },
       })
     );
     page.addComponent(
-      new ComponentHTML({
-        html: "(Set treshold for impact transfers)",
+      "upperBound",
+      new ComponentSlider({
+        bg: "initial",
+        label: "Upper-Bound:",
+        options: [0, 0.16, 0.33, 0.5, 0.66, 0.83, 1],
+        //options: [0, 1/6, 2/6, 3/6, 4/6, 5/6, 1],
+        oninput: function (value) {
+          if (value > Edge.defaultLowBound || Edge.defaultUpBound == -1) {
+            if (Edge.defaultUpBound == value) {
+              Edge.defaultUpBound = -1;
+            } else {
+              Edge.defaultUpBound = value;
+            }
+          }
+        },
       })
     );
     page.addComponent(
